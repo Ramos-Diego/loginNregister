@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Login</title>
+</head>
+
+<body>
+  <div>
+    <h3>Login</h3>
+
+    <form action="/login" method="POST">
+
+      <% if (flash) { _%>
+      <div class="<%= flash.type %>">
+        <%= flash.message %>
+      </div>
+      <% } _%>
+
+      <label for="email">Email</label>
+      <input name="email"type="email" value="<%= flash ? flash.email : '' %>" required>
+      <label for="password">Password</label>
+      <input name="password" type="password" required>
+
+      <button>Login</button>
+      <a href="/register">Register</a>
+      
+    </form>
+  </div>
+</body>
+
+</html>
