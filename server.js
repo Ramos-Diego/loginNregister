@@ -1,11 +1,12 @@
-// Use local environment variable if not on production
+// Only grab SECRET environment variables from .env
+// if not running on production
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
 const express = require('express')
 const app = express() // initialize express
-const path = require('path') // for \ vs / OS paths
+const { join } = require('path') // for \ vs / OS paths
 const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
@@ -17,29 +18,42 @@ app.use(express.json())
 // handle form submitions middleware
 app.use(express.urlencoded({ extended: false }))
 // Set a static folder
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(join(__dirname, 'public')))
 
-// -------------- DATABASE ----------------
-require('./config/database.js')
-
-// EQUALS 2 HOURS = (1000 ms * 60 sec * 60 min * 2 hr)
-const TWO_HOURS = 1000 * 60 * 60 * 2
-
-// Configuration/Environment Variable
+// -------------- ENVIRONMENT VARIABLES ----------------
+// In a production environment like heroku, these can be set
+// in the user interface or through a cli. The other option
+// is to store the SECRETS in a .env file (less safe).
 const {
-  PORT = 3000, // TODO: Make sure setting PORT like this works in production
-  NODE_ENV = 'development', // Default to development if it's not provided
-  SESSION_LIFETIME = TWO_HOURS,
+  // DEFAULT values for development
+  PORT = 3000,
+  NODE_ENV = 'development',
+  // EQUALS 2 HOURS = (1000 ms * 60 sec * 60 min * 2 hr)
+  SESSION_LIFETIME = 1000 * 60 * 60 * 2,
   SESSION_NAME = 'sid',
-  SESSION_SECRET = 'aTINYsecret'
+  // SECRET environment variables
+  SESSION_SECRET, // Random string
+  MONGODB_URI // mongodb://localhost/database_name
 } = process.env
 
-// if NODE_ENV in production, make session.cookie.secure = true
-const IN_PRODUCTION = NODE_ENV === 'production'
+// -------------- DATABASE ----------------
+// Connect to the database
+mongoose.connect(MONGODB_URI, {
+  // mongoose options to avoid deprecation warnings
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+})
+
+mongoose.connection.on('error', err => console.error(err))
+mongoose.connection.on('connected', () => {
+  console.log(`Connected to the ${NODE_ENV} database.`)
+})
 
 // -------------- SESSIONS ----------------
-// All the sessions will be saved in the 'sessions' collection
-// of the database
+// All the sessions will be saved in the 'sessions'
+// collection of the database
 app.use(session({
   name: SESSION_NAME,
   resave: false,
@@ -51,13 +65,16 @@ app.use(session({
   }),
   cookie: {
     maxAge: SESSION_LIFETIME,
-    sameSite: true,
-    secure: IN_PRODUCTION
+    sameSite: true
+    // if NODE_ENV in production, session.cookie.secure = true
+    // HTTPS is necessary for secure cookies.
+    // secure: NODE_ENV === 'production'
   }
 }))
 
+// Save the USER object to res.locals
 app.use((req, res, next) => {
-  console.log(req.method, req.baseUrl, req.session)
+  console.log(req.method, req.session)
   // res.locals is a special object is shared among the middlewares
   if (req.session.user) {
     res.locals.user = req.session.user
@@ -71,10 +88,9 @@ app.use((req, res, next) => {
 })
 
 // -------------- FLASH MESSAGES ----------------
-// Custom flash middleware
-app.use(/\/login|\/register/, (req, res, next) => {
-  // If there's a flash message in the session request,
-  // make it available in the response, then delete it.
+app.use(['/login', '/register'], (req, res, next) => {
+  // If there's a flash message in the req.session,
+  // pass it to res.locals, then delete it.
   res.locals.flash = req.session.flash
   delete req.session.flash
   next()
@@ -83,4 +99,4 @@ app.use(/\/login|\/register/, (req, res, next) => {
 // Import and use routers
 app.use('/', require('./routes/indexR'))
 
-app.listen(PORT, console.log(`listening on ${PORT}`))
+app.listen(PORT, console.log(`Listening on http://localhost:${PORT}`))

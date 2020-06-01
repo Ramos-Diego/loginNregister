@@ -7,9 +7,13 @@
 <body>
   <div>
     <h3>Login</h3>
+    <a href="/">Home</a>
+    <br>
+    <br>
 
     <form action="/login" method="POST">
 
+      <%# This block only renders when flash exists %> 
       <% if (flash) { _%>
       <div class="<%= flash.type %>">
         <%= flash.message %>
