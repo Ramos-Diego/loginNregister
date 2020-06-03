@@ -31,6 +31,6 @@ router.get('/register', loggedInProtection, (req, res) => {
 router.post('/register', loggedInProtection, registerUser)
 
 // -------------- LOGOUT ----------------
-router.post('/logout', notLoggedInProtection, logoutUser)
+router.get('/logout', notLoggedInProtection, logoutUser)
 
 module.exports = router
