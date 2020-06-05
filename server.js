@@ -21,9 +21,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.static(join(__dirname, 'public')))
 
 // -------------- ENVIRONMENT VARIABLES ----------------
-// In a production environment like heroku, these can be set
-// in the user interface or through a cli. The other option
-// is to store the SECRETS in a .env file (less safe).
+// In a production environment like heroku, the SECRET environment
+// variables can be set in the user interface or through a cli.
+// The other option is to store the SECRETS in a .env file (less safe).
 const {
   // DEFAULT values for development
   PORT = 3000,

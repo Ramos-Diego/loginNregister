@@ -13,9 +13,7 @@
       <a href="/register">Register</a>
       <% if (loggedIn) { %>
       <h3>Your email is: <%= email %></h3>
-      <form action="/logout" method="POST">
-        <button>Logout</button>
-      </form>
+      <a href="/logout">Logout</a>
       <% } %>
     </div>
 
