@@ -13,7 +13,7 @@
 
     <form action="/login" method="POST">
 
-      <%# This block only renders when flash exists %> 
+      <%# HANDLE WRONG EMAIL OR PASSWORD %> 
       <% if (flash) { _%>
       <div class="<%= flash.type %>">
         <%= flash.message %>
@@ -22,8 +22,18 @@
 
       <label for="email">Email</label>
       <input name="email"type="email" value="<%= flash ? flash.email : '' %>" required>
+      
       <label for="password">Password</label>
       <input name="password" type="password" required>
+
+      <%# HANDLE EMAIL VERIFICATION %>
+      <% if (flash && flash.type === 'warning') { %>
+        <div class="<%= flash.type %>">
+        <%= flash.message %>
+      </div>
+      <label for="verificationCode">Verification</label>
+      <input required name="verificationCode" type="number" placeholder="Verification code">
+      <% } _%>
 
       <button>Login</button>
       <a href="/register">Register</a>

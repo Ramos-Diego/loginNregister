@@ -15,6 +15,13 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
     unique: true
+  },
+  emailVerificationCode: {
+    type: Number
+  },
+  accountVerified: {
+    type: Boolean,
+    default: false
   }
 })
 

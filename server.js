@@ -13,10 +13,13 @@ const MongoStore = require('connect-mongo')(session)
 
 // setup view engine
 app.set('view engine', 'ejs')
+
 // Body parser middleware, handle JSON
 app.use(express.json())
+
 // handle form submitions middleware
 app.use(express.urlencoded({ extended: false }))
+
 // Set a static folder
 app.use(express.static(join(__dirname, 'public')))
 
@@ -74,7 +77,8 @@ app.use(session({
 
 // Save the USER object to res.locals
 app.use((req, res, next) => {
-  console.log(req.method, req.session)
+  console.log(req.method, req.originalUrl,
+    req.session.user ? req.session.user : 'guest user')
   // res.locals is a special object is shared among the middlewares
   if (req.session.user) {
     res.locals.user = req.session.user
