@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 
 <head>
+  <%- include('partials/_head.ejs') %>
   <title>Register</title>
 </head>
 
 <body>
-  <div>
-    <h3>Register</h3>
-    <a href="/">Home</a>
-    <br>
-    <br>
+  <div class="container">
 
-    <form action="/register" method="POST">
+    <!-- NAVIGATION BAR -->
+    <header class="header">
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Guide</a></li>
+        </ul>
+      </nav>
+    </header>
 
+    <form action="/register" method="POST" class="content">
+
+      <h3>Register</h3>
       <%# HANDLE EMAIL ALREADY EXISTS %>
       <% if (flash) { _%>
       <div class="<%= flash.type %>">

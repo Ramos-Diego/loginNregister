@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 
 <head>
+  <%- include('partials/_head.ejs') %>
   <title>Login</title>
 </head>
 
 <body>
-  <div>
-    <h3>Login</h3>
-    <a href="/">Home</a>
-    <br>
-    <br>
+  <div class="container">
 
-    <form action="/login" method="POST">
+    <!-- NAVIGATION BAR -->
+    <header class="header">
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Guide</a></li>
+        </ul>
+      </nav>
+    </header>
 
-      <%# HANDLE WRONG EMAIL OR PASSWORD %> 
+    <!-- LOGIN FORM -->
+    <form action="/login" method="POST" class="content">
+
+      <h3>Login</h3>
+      <%# HANDLE WRONG EMAIL OR PASSWORD %>
       <% if (flash) { _%>
       <div class="<%= flash.type %>">
         <%= flash.message %>
@@ -21,14 +31,14 @@
       <% } _%>
 
       <label for="email">Email</label>
-      <input name="email"type="email" value="<%= flash ? flash.email : '' %>" required>
-      
+      <input name="email" type="email" value="<%= flash ? flash.email : '' %>" required>
+
       <label for="password">Password</label>
       <input name="password" type="password" required>
 
       <%# HANDLE EMAIL VERIFICATION %>
       <% if (flash && flash.type === 'warning') { %>
-        <div class="<%= flash.type %>">
+      <div class="<%= flash.type %>">
         <%= flash.message %>
       </div>
       <label for="verificationCode">Verification</label>
@@ -37,8 +47,8 @@
 
       <button>Login</button>
       <a href="/register">Register</a>
-      
     </form>
+
   </div>
 </body>
 

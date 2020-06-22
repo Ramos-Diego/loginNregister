@@ -1,0 +1,18 @@
+/* Import fonts from server
+
+  check if font is installed locally,
+  if not then download
+   src: local("some Font");
+
+  Importing font from server example.
+*/
+
+@font-face {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: normal;
+  font-display: auto;
+  src: local("Source Sans Pro"),
+       local("Source-Sans-Pro"),
+       url("../webfonts/SourceSansPro-Regular.ttf") format("truetype");
+ }

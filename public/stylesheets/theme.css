@@ -1,0 +1,59 @@
+/* Transition animation for entire page
+  to switch betweem light and dark mode*/
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *:before,
+html.theme-transition *:after{
+  transition: all 700ms;
+  transition-delay: 0;
+}
+
+/* COLORS/THEMES */
+/* :root = <html> and = the selector html,
+ but its specificity is higher.*/
+:root{
+    --saturation: 100%;
+
+    /* Hues */
+    --hue-primary: 200; /* blue */
+    --hue-accent: 50; /* yellow */    
+    --hue-error: 355; /* red */
+    --hue-success: 125; /* green */
+    --hue-interactive: 202; /* blue */
+  
+    /* 0 = red, but saturation = 0 
+      small values of saturation can be used
+      to create a colorish background*/
+    --hue-background: 0;
+    
+
+  /* Brand Colors */
+  --primary: hsl(var(--hue-primary), var(--saturation), 45%);
+
+  /* Text and Background */
+  --text: hsl(var(--hue-background), 0%, 20%); 
+  --contrast: hsl(var(--hue-background), 0%, 85%);
+  --background: hsl(var(--hue-background), 0%, 95%);
+
+  /* Denotive colors */
+  --error: hsl(var(--hue-error), var(--saturation), 45%); /*A shade of red*/
+  --success: hsl(var(--hue-success), var(--saturation), 45%); /*A shade of green*/
+  --accent: hsl(var(--hue-accent), var(--saturation), 50%);
+  --disabled: hsl(var(--hue-background), 0%, 75%); /*Lighter shade of gray*/
+ 
+  /* Interactive colors: use as few as possible */
+  --interactive-ligthest: hsl(var(--hue-interactive), var(--saturation), 70%);
+  --interactive-ligther: hsl(var(--hue-interactive), var(--saturation), 60%);
+  --interactive: hsl(var(--hue-interactive), var(--saturation), 50%);
+  --interactive-darker: hsl(var(--hue-interactive), var(--saturation), 40%);
+  --interactive-darkest: hsl(var(--hue-interactive), var(--saturation), 30%);
+}
+
+/* Dark mode 
+ Only changes changes lightness*/
+:root[theme='dark']{
+  --text: hsl(var(--hue-background), 0%, 85%); 
+  --contrast: hsl(var(--hue-background), 0%, 20%);
+  --background: hsl(var(--hue-background), 0%, 15%);
+  --disabled: hsl(var(--hue-background), 0%, 40%);
+}
