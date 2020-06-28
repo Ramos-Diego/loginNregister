@@ -10,6 +10,10 @@ const { join } = require('path') // for \ vs / OS paths
 const mongoose = require('mongoose')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
+const helmet = require('helmet')
+
+// Helmet helps you secure your Express apps by setting various HTTP headers.
+app.use(helmet())
 
 // setup view engine
 app.set('view engine', 'ejs')
@@ -23,6 +27,7 @@ app.use(express.urlencoded({ extended: false }))
 // Set a static folder
 app.use(express.static(join(__dirname, 'public')))
 
+
 // -------------- ENVIRONMENT VARIABLES ----------------
 // In a production environment like heroku, the SECRET environment
 // variables can be set in the user interface or through a cli.
@@ -33,7 +38,7 @@ const {
   NODE_ENV = 'development',
   // EQUALS 2 HOURS = (1000 ms * 60 sec * 60 min * 2 hr)
   SESSION_LIFETIME = 1000 * 60 * 60 * 2,
-  SESSION_NAME = 'sid',
+  SESSION_NAME = 'id',
   // SECRET environment variables
   SESSION_SECRET, // Random string
   MONGODB_URI // mongodb://localhost/database_name
@@ -42,7 +47,7 @@ const {
 // -------------- DATABASE ----------------
 // Connect to the database
 mongoose.connect(MONGODB_URI, {
-  
+
   // mongoose options to avoid deprecation warnings
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -58,6 +63,7 @@ mongoose.connection.on('connected', () => {
 // -------------- SESSIONS ----------------
 // All the sessions will be saved in the 'sessions'
 // collection of the database
+// https://github.com/expressjs/session#readme
 app.use(session({
   name: SESSION_NAME,
   resave: false,
@@ -77,11 +83,15 @@ app.use(session({
 }))
 
 // Save the USER object to res.locals
+// https://expressjs.com/en/api.html#res.locals
 app.use((req, res, next) => {
   console.log(req.method, req.originalUrl,
     req.session.user ? req.session.user : 'guest user')
+
   // res.locals is a special object is shared among the middlewares
   if (req.session.user) {
+    // Upon every request, populate res.locals.user
+    // with the user's id
     res.locals.user = req.session.user
   } else {
     res.locals.user = null

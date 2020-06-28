@@ -11,11 +11,10 @@ const User = require('../models/userSchema')
 
 // -------------- HOME ----------------
 router.get('/', mustBeLoggedIn, (req, res) => {
-  
   // Get the user object from the database based on
   // the id, but only pass the email to the client.
   User.findById(res.locals.user)
-    .then( user => {
+    .then(user => {
       res.render('index.ejs', { email: user.email })
     })
     .catch((err) => console.error(err))
