@@ -35,7 +35,7 @@ app.use(express.static(join(__dirname, 'public')))
 const {
   // DEFAULT values for development
   PORT = 3000,
-  NODE_ENV = 'development',
+  NODE_ENV,
   // EQUALS 2 HOURS = (1000 ms * 60 sec * 60 min * 2 hr)
   SESSION_LIFETIME = 1000 * 60 * 60 * 2,
   SESSION_NAME = 'id',

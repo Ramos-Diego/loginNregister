@@ -17,4 +17,20 @@ Technologies used:
 - [nodemailer](https://nodemailer.com/about/)
 - [pbkdf2Sync](https://nodejs.org/api/crypto.html#crypto_crypto_pbkdf2sync_password_salt_iterations_keylen_digest)
 
+You must run
+
+``` sh
+yarn install
+```
+
+and create a `.env` file in the root directory containing the following:
+
+```
+MONGODB_URI=mongodb://localhost/yourDB
+SESSION_SECRET=<A random string>
+EMAIL_PASSWORD=<Email password>
+EMAIL=<An email>
+NODE_ENV=development
+```
+
 Made by Diego Ramos
