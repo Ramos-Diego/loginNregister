@@ -1,8 +1,13 @@
-/* RESET browser default css*/
-html { box-sizing: border-box; }
+html { 
+  box-sizing: border-box;
+}
 
 *, *:before, *:after {
   box-sizing: inherit;
   margin: 0;
   padding: 0;
+}
+
+*:focus {
+  outline: none;
 }

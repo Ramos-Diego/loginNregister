@@ -42,6 +42,7 @@ const {
 // -------------- DATABASE ----------------
 // Connect to the database
 mongoose.connect(MONGODB_URI, {
+  
   // mongoose options to avoid deprecation warnings
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -83,10 +84,7 @@ app.use((req, res, next) => {
   if (req.session.user) {
     res.locals.user = req.session.user
   } else {
-    res.locals.user = {
-      _id: null,
-      email: null
-    }
+    res.locals.user = null
   }
   next()
 })
@@ -101,6 +99,6 @@ app.use(['/login', '/register'], (req, res, next) => {
 })
 
 // Import and use routers
-app.use('/', require('./routes/indexR'))
+app.use('/', require('./routes/index'))
 
 app.listen(PORT, console.log(`Listening on http://localhost:${PORT}`))

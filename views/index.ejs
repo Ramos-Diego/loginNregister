@@ -7,14 +7,20 @@
 
 <body>
   <div class="container">
-    <h3>Home</h3>
+    <!-- NAVIGATION BAR -->
+    <nav class="header">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </nav>
 
-    <div>
-      <a href="/login">Login</a>
-      <a href="/register">Register</a>
-
-      <% if (loggedIn) { %>
-      <h3>Your email is: <%= email %></h3>
+    <div class="content">
+      
+      <h2>Home</h2>
+      <% if (email) { %>
+      <p>Your email is: <strong><%= email %></strong></p>
       <a href="/logout">Logout</a>
       <% } %>
       

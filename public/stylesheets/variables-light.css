@@ -1,0 +1,23 @@
+:root {
+  /* LIGHT */
+  --background: var(--light-background);
+  --contrast: var(--light);
+  --hover: var(--light-hover);
+
+  --text-main: var(--dark);
+  --text-bright: var(--dark);
+  --text-muted: var(--dark-light);
+  --text-selection: var(--light);
+  --form-border: var(--light-disabled);
+
+  --primary: var(--dark-primary);
+  --focus: var(--light-primary);
+  --links: var(--dark-primary);
+  --border: var(--dark-primary);
+
+  --code: var(--black);
+  --animation-duration: 0.1s;
+  --variable: var(--dark-success);
+  --highlight: var(--warning-dark);
+  --error: var(--light-error);
+}

@@ -9,34 +9,44 @@
   <div class="container">
 
     <!-- NAVIGATION BAR -->
-    <header class="header">
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="#">Contact</a></li>
-          <li><a href="#">Guide</a></li>
-        </ul>
-      </nav>
-    </header>
+    <nav class="header">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="/login">Login</a></li>
+      </ul>
+    </nav>
 
+    <!-- REGISTER FORM -->
     <form action="/register" method="POST" class="content">
 
-      <h3>Register</h3>
-      <%# HANDLE EMAIL ALREADY EXISTS %>
+      <h2>Register</h2>
+
+      <%# EMAIL ALREADY EXISTS MESSAGE %>
       <% if (flash) { _%>
       <div class="<%= flash.type %>">
-        <%= flash.message %>
+        <%- flash.message %>
       </div>
       <% } _%>
       
-      <label for="email">Email</label>
-      <input name="email"type="email" value="<%= flash ? flash.email : '' %>" required>
+      <label for="email" hidden>Email</label>
+      <input
+      name="email"
+      type="email"
+      value="<%= flash ? flash.email : '' %>"
+      placeholder="Email"
+      required
+      />
       
-      <label for="password">Password</label>
-      <input name="password" type="password" required>
+      <label for="password" hidden>Password</label>
+      <input
+      name="password"
+      type="password"
+      placeholder="Password"
+      required
+      />
 
-      <button>Register</button>
-      <a href="/login">Login</a>
+      <input type="submit" value="Register" />
       
     </form>
   </div>
